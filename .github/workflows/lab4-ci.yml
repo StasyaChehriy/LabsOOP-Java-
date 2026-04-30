@@ -1,0 +1,33 @@
+name: Java CI for Lab 4
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Download JUnit and Run Tests
+        run: |
+          mkdir -p lib bin
+          # Завантажуємо JUnit Standalone для перевірки ієрархії класів
+          curl -L https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.2/junit-platform-console-standalone-1.10.2.jar -o lib/junit-standalone.jar
+          
+          # Компілюємо всі класи Lab 4 (Letter, Word, Sentence, Text, MainLab4)
+          javac -d bin -cp "lib/junit-standalone.jar:." LAB_4/src/*.java LAB_4/test/*.java
+          
+          # Запускаємо тести з перевіркою твого 8-го варіанту (5123)
+          java -jar lib/junit-standalone.jar --class-path bin --scan-class-path --fail-if-no-tests
