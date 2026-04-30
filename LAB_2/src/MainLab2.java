@@ -1,8 +1,10 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+package LAB_2.src;
 import java.util.ArrayList;
 
-public class Main {
+
+public class MainLab2 {
 
     public static void main(String[] args) {
         try {

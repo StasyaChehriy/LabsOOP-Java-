@@ -1,3 +1,7 @@
+package LAB_2.test;
+
+import LAB_2.src.WordSorter;
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
