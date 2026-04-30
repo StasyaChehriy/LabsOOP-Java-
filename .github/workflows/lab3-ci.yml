@@ -3,8 +3,6 @@ name: Java CI for Lab 3
 on:
   push:
     branches: [ "master", "main" ]
-  pull_request:
-    branches: [ "master", "main" ]
 
 jobs:
   build:
@@ -19,13 +17,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Compile and Run Tests
+      - name: Download JUnit and Run Tests
         run: |
-          
           mkdir -p bin
+          # 1. Завантажуємо універсальний JAR JUnit (Console Standalone)
+          wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.8.2/junit-platform-console-standalone-1.8.2.jar -O junit-standalone.jar
           
+          # 2. Компілюємо код разом із завантаженим JAR
+          javac -d bin -cp "junit-standalone.jar:." LAB_3/src/*.java LAB_3/test/*.java
           
-          javac -d bin -cp "lib/*:." LAB_3/src/*.java LAB_3/test/*.java
-          
-          
-          java -cp "bin:lib/*" org.junit.platform.console.ConsoleLauncher --scan-class-path --reports-dir=test-reports
+          # 3. Запускаємо тести
+          java -jar junit-standalone.jar -cp bin --scan-class-pathpath --reports-dir=test-reports
