@@ -1,0 +1,35 @@
+name: LAB 2 Tests
+
+on:
+  push:
+    paths:
+      - 'LAB_2/**'
+      - '.github/workflows/lab2-ci.yml'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Завантаження коду
+        uses: actions/checkout@v4
+
+      - name: Налаштування Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Завантаження JUnit (для тестів)
+        run: wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.2/junit-platform-console-standalone-1.10.2.jar -O junit.jar
+
+      - name: Компіляція коду LAB_2
+        run: |
+          mkdir -p out
+          javac -d out LAB_2/src/*.java
+
+      - name: Компіляція тестів LAB_2
+        run: javac -d out -cp "out:junit.jar" LAB_2/test/*.java
+
+      - name: Запуск тестів
+        run: java -jar junit.jar -cp out --scan-classpath
