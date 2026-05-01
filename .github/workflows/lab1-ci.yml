@@ -24,10 +24,11 @@ jobs:
         run: |
           mkdir -p lib bin
           
+          
           curl -L https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.2/junit-platform-console-standalone-1.10.2.jar -o lib/junit-standalone.jar
           
           
-          javac -d bin -cp "lib/junit-standalone.jar:." LAB_1/src/LAB_1/src/*.java LAB_1/test/LAB_1/test/*.java
+          javac -d bin -cp "lib/junit-standalone.jar:." $(find LAB_1 -name "*.java")
           
-          
+         
           java -jar lib/junit-standalone.jar --class-path bin --scan-class-path --fail-if-no-tests
