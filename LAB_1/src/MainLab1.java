@@ -1,53 +1,39 @@
 package LAB_1.src;
-import java.util.Scanner;
 
+import java.util.Arrays;
+
+/**
+ * Executive class for Laboratory Work #1.
+ * Handles initialization and output formatting.
+ */
 public class MainLab1 {
-    static void main (String [] args) {
-        Scanner output = new Scanner(System.in);
+    public static void main(String[] args) {
+        Processor processor = new Processor();
 
-        int rows = 0;
-        int cols = 0;
+        // Sample data: floating-point matrices
+        float[][] a = {{10.5f, 5.0f}, {20.1f, 3.2f}};
+        float[][] b = {{2.5f, 1.0f}, {15.9f, 2.2f}};
 
-        while (true) {
-            System.out.print("Введіть кількість рядків: ");
-            try {
-                rows = Integer.parseInt(output.nextLine());
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Помилка! Введіть ціле число.");
+        try {
+            // Execution Step 1: XOR Operation
+            float[][] c = processor.xorMatrices(a, b);
+
+            // Execution Step 2: Row Averages calculation
+            float[] averages = processor.calculateRowAverages(c);
+
+            System.out.println("--- Resulting Matrix C (A XOR B) ---");
+            for (float[] row : c) {
+                System.out.println(Arrays.toString(row));
             }
-        }
-        while (true) {
-            System.out.println("Введіть кількість стовпців: ");
-            try {
-                cols = Integer.parseInt(output.nextLine());
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Помилка! Введіть ціле число.");
+
+            System.out.println("\n--- Row Averages ---");
+            for (int i = 0; i < averages.length; i++) {
+                System.out.printf("Row %d Average: %.4f%n", i, averages[i]);
             }
+
+        } catch (Exception e) {
+            // Requirement: Handling all possible exceptional situations
+            System.err.println("Critical error during execution: " + e.getMessage());
         }
-        float[][] matrix_A = new float[rows][cols];
-        float[][] matrix_B = new float[rows][cols];
-        float[][] result;
-        System.out.println("Введіть дані для матриці А: ");
-        Matrix.create_matrix(matrix_A, output);
-
-        System.out.println("Введіть дані для матриці B: ");
-        Matrix.create_matrix(matrix_B, output);
-
-        if (matrix_A.length != matrix_B.length ||
-                matrix_A[0].length != matrix_B[0].length) {
-
-            System.out.println("Матриці мають різні розміри!");
-        }
-
-        result = Matrix.xor_matrix(matrix_A, matrix_B);
-
-        System.out.println("Результат XOR:");
-        Matrix.print_matrix(result);
-
-        System.out.println("Середнє значення рядків:");
-        Matrix.print_averages_of_rows(matrix_A);
-        Matrix.print_averages_of_rows(matrix_B);
     }
 }
