@@ -1,4 +1,4 @@
-name: Java CI for Lab 3
+name: Java CI for Lab 6
 
 on:
   push:
@@ -12,10 +12,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4  # Оновлено до v4 (прибере попередження)
+        uses: actions/checkout@v4
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4 # Оновлено до v4
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -23,11 +23,11 @@ jobs:
       - name: Download JUnit and Run Tests
         run: |
           mkdir -p lib bin
-          
+         
           curl -L https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.2/junit-platform-console-standalone-1.10.2.jar -o lib/junit-standalone.jar
           
           
-          javac -d bin -cp "lib/junit-standalone.jar:." LAB_3/src/*.java LAB_3/test/*.java
+          javac -d bin -cp "lib/junit-standalone.jar:." LAB_5/src/*.java LAB_6/src/*.java LAB_6/test/*.java
           
           
           java -jar lib/junit-standalone.jar --class-path bin --scan-class-path --fail-if-no-tests

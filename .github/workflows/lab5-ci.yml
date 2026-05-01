@@ -23,11 +23,11 @@ jobs:
       - name: Download JUnit and Run Tests
         run: |
           mkdir -p lib bin
-          # Завантажуємо JUnit для тестування ієрархії Sweet, ChocolateCandy, Lollipop, Caramel
+          
           curl -L https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.2/junit-platform-console-standalone-1.10.2.jar -o lib/junit-standalone.jar
           
-          # Компілюємо всі класи Lab 5 та їхні тести
+          
           javac -d bin -cp "lib/junit-standalone.jar:." LAB_5/src/*.java LAB_5/test/*.java
           
-          # Запускаємо тести (перевірка ваги, сортування та винятків)
+          
           java -jar lib/junit-standalone.jar --class-path bin --scan-class-path --fail-if-no-tests
